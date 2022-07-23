@@ -12,6 +12,13 @@ public class Main {
 
     public static void main(String[] args) {
 
+       createUsers();
+
+       createProducts();
+
+       mainMenu();
+}
+    private static void createUsers(){
         //Create users
         User user0 = new User(0, "Bob", "Miller", new BigDecimal("260.50"));
         User user1 = new User(1, "David", "Gonzales", new BigDecimal("350.25"));
@@ -21,7 +28,9 @@ public class Main {
         users.add(user0);
         users.add(user1);
         users.add(user2);
+    }
 
+    private static void createProducts(){
         //Create products
         Product product0 = new Product(0, "Pork", new BigDecimal("249.65"));
         Product product1 = new Product(1, "Veal", new BigDecimal("316.99"));
@@ -31,8 +40,8 @@ public class Main {
         products.add(product0);
         products.add(product1);
         products.add(product2);
-
-        //Main menu
+    }
+    private static void mainMenu(){
         System.out.println("Menu:");
         System.out.println("1: Display list of all users\n" +
                 "2: Display list of all products\n" +
@@ -64,7 +73,7 @@ public class Main {
                 System.out.println("Oooops, something wrong!");
         }
         in.close();
-}
+    }
 
     private static void userList(){
         System.out.println("\nDisplay list of all users:");
@@ -106,6 +115,9 @@ public class Main {
                                 + users.get(i).getLastName() + " bought " + products.get(j).getName());
                         //Decrease of user's money
                         users.get(i).setAmountOfMoney(users.get(i).getAmountOfMoney().subtract(products.get(j).getPrice()));
+
+                        System.out.println(users.get(i).getFirstName() + " " + users.get(i).getLastName()
+                                + " has left " + users.get(i).getAmountOfMoney() + " UAH");
 
                         //Add user products to Collection
                         multiMapUserProducts.add(products.get(j).getId());
