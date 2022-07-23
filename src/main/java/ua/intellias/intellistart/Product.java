@@ -1,16 +1,17 @@
 package ua.intellias.intellistart;
-//import java.math.BigDecimal;
+import java.math.BigDecimal;
 
 public class Product {
     private int id;
     private String name;
-    private int price; // гроші зберігаються в копійках
+    private BigDecimal price;
 
-    public Product(int id, String name, int price) {
+    public Product(int id, String name, BigDecimal price) {
         this.id = id;
         this.name = name;
         this.price = price;
     }
+
     public int getId() {
         return id;
     }
@@ -27,11 +28,11 @@ public class Product {
         this.name = name;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

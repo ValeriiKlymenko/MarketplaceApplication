@@ -1,13 +1,13 @@
 package ua.intellias.intellistart;
-//import java.math.BigDecimal;
+import java.math.BigDecimal;
 
 public class User {
     private int id;
     private String firstName;
     private String lastName;
-    private int amountOfMoney; // гроші зберігаються в копійках
+    private BigDecimal amountOfMoney;
 
-    public User(int id, String firstName, String lastName, int amountOfMoney) {
+    public User(int id, String firstName, String lastName, BigDecimal amountOfMoney) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,11 +38,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getAmountOfMoney() {
+    public BigDecimal getAmountOfMoney() {
         return amountOfMoney;
     }
 
-    public void setAmountOfMoney(int amountOfMoney) {
+    public void setAmountOfMoney(BigDecimal amountOfMoney) {
         this.amountOfMoney = amountOfMoney;
     }
 }
