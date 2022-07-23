@@ -87,13 +87,13 @@ public class Main {
         Scanner in = new Scanner(System.in);
         System.out.print("\nWho want to buy product? Enter id: ");
         int userId = 0;
-        while (!in.hasNextInt() || (userId = in.nextInt()) > 2 || userId < 0) {
+        while (!in.hasNextInt() || (userId = in.nextInt()) > users.size() || userId < 0) {
             System.out.println("Error, please try again!");
             in.nextLine();
         }
         System.out.print("\nWhich product want to buy? Enter id: ");
         int productId = 0;
-        while (!in.hasNextInt() || (productId = in.nextInt()) > 2 || productId < 0) {
+        while (!in.hasNextInt() || (productId = in.nextInt()) > products.size() || productId < 0) {
             System.out.println("Error, please try again!");
             in.nextLine();
         }
@@ -126,9 +126,9 @@ public class Main {
     private static void userProducts(){
         System.out.println("Display list of user products:");
         Scanner in = new Scanner(System.in);
-        int userProductsId = 0;
+        int userProductsId;
 
-        while (!in.hasNextInt() || (userProductsId = in.nextInt()) > 2 || userProductsId < 0){
+        while (!in.hasNextInt() || (userProductsId = in.nextInt()) > multiMapUser.size() || userProductsId < 0){
             System.out.println("Error, please try again!");
             in.nextLine();
         }
@@ -143,9 +143,9 @@ public class Main {
     private static void boughtProduct(){
         System.out.println("Display list of users that bought product:");
         Scanner in = new Scanner(System.in);
-        int boughtProductId = 0;
+        int boughtProductId;
 
-        while (!in.hasNextInt() || (boughtProductId = in.nextInt()) > 2 || boughtProductId < 0){
+        while (!in.hasNextInt() || (boughtProductId = in.nextInt()) > multiMapProduct.size() || boughtProductId < 0){
             System.out.println("Error, please try again!");
             in.nextLine();
         }
