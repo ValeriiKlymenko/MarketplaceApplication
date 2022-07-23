@@ -1,33 +1,35 @@
 package ua.intellias.intellistart;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
+
 public class Main {
     private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Product> products = new ArrayList<>();
-    private static HashMap<Integer, Integer> userProducts = new HashMap<>();
+    private static Map<Integer,ArrayList<Integer>> multiMapUser = new HashMap<Integer, ArrayList<Integer>>();
+    private static ArrayList<Integer> multiMapUserProducts = new ArrayList<Integer>();
+    private static Map<Integer,ArrayList<Integer>> multiMapProduct = new HashMap<Integer, ArrayList<Integer>>();
+    private static ArrayList<Integer> multiMapBoughtProduct = new ArrayList<Integer>();
 
     public static void main(String[] args) {
 
         //Create users
-        User user1 = new User(1, "Bob", "Miller", 5000);
-        User user2 = new User(2, "David", "Gonzales", 2000);
-        User user3 = new User(3, "Bruno", "Lewis", 4000);
+        User user0 = new User(0, "Bob", "Miller", 5000);
+        User user1 = new User(1, "David", "Gonzales", 2000);
+        User user2 = new User(2, "Bruno", "Lewis", 4000);
 
         // Add users to Collection ArrayList
+        users.add(user0);
         users.add(user1);
         users.add(user2);
-        users.add(user3);
 
         //Create products
-        Product product1 = new Product(1, "Pork", 2150);
-        Product product2 = new Product(2, "Veal", 3250);
-        Product product3 = new Product(3, "Chicken", 850);
+        Product product0 = new Product(0, "Pork", 2150);
+        Product product1 = new Product(1, "Veal", 3250);
+        Product product2 = new Product(2, "Chicken", 850);
 
         // Add products to Collection ArrayList
+        products.add(product0);
         products.add(product1);
         products.add(product2);
-        products.add(product3);
 
         //Main menu
         System.out.println("Menu:");
@@ -52,10 +54,10 @@ public class Main {
                 buyProduct();
                 break;
             case 4:
-                System.out.println("Display list of user products:");
+                userProducts();
                 break;
             case 5:
-                System.out.println("Display list of users that bought product:");
+                boughtProduct();
                 break;
             default:
                 System.out.println("Oooops, something wrong!");
@@ -67,7 +69,8 @@ public class Main {
         System.out.println("\nDisplay list of all users:");
         for (int i = 0; i < users.size(); i++) {
             System.out.println("id = " + users.get(i).getId() + ", first name = " + users.get(i).getFirstName()
-                    + ", last name = " + users.get(i).getLastName() + ", amountOfMoney = " + users.get(i).getAmountOfMoney() + " UAH");
+                    + ", last name = " + users.get(i).getLastName() + ", amountOfMoney = "
+                    + users.get(i).getAmountOfMoney() + " UAH");
         }
     }
 
@@ -84,13 +87,13 @@ public class Main {
         Scanner in = new Scanner(System.in);
         System.out.print("\nWho want to buy product? Enter id: ");
         int userId = 0;
-        while (!in.hasNextInt() || (userId = in.nextInt()) > 3 || userId < 1) {
+        while (!in.hasNextInt() || (userId = in.nextInt()) > 2 || userId < 0) {
             System.out.println("Error, please try again!");
             in.nextLine();
         }
         System.out.print("\nWhich product want to buy? Enter id: ");
         int productId = 0;
-        while (!in.hasNextInt() || (productId = in.nextInt()) > 3 || productId < 1) {
+        while (!in.hasNextInt() || (productId = in.nextInt()) > 2 || productId < 0) {
             System.out.println("Error, please try again!");
             in.nextLine();
         }
@@ -99,17 +102,58 @@ public class Main {
 
                 if (userId == users.get(i).getId() && productId == products.get(j).getId()){
                     if(users.get(i).getAmountOfMoney() >= products.get(j).getPrice()){
-                        System.out.println("Success!!! " + users.get(i).getFirstName() + " " + users.get(i).getLastName() + " bought " + products.get(j).getName());
+                        System.out.println("Success!!! " + users.get(i).getFirstName() + " "
+                                + users.get(i).getLastName() + " bought " + products.get(j).getName());
                         //Decrease of user's money
                         users.get(i).setAmountOfMoney(users.get(i).getAmountOfMoney() - products.get(j).getPrice());
-                        //Add user products to Collection HashMap
-                        userProducts.put(users.get(i).getId(), products.get(j).getId());
+
+                        //Add user products to Collection
+                        multiMapUserProducts.add(products.get(j).getId());
+                        multiMapUser.put(users.get(i).getId(), multiMapUserProducts);
+
+                        //Add bought product to Collection
+                        multiMapBoughtProduct.add(users.get(i).getId());
+                        multiMapProduct.put(products.get(j).getId(), multiMapBoughtProduct);
                     }else {
-                        System.out.println(users.get(i).getFirstName() + " " + users.get(i).getLastName() + " has no money!");
+                        System.out.println(users.get(i).getFirstName() + " " + users.get(i).getLastName()
+                                + " has no money!");
                     }
                 }
             }
         }
     }
 
+    private static void userProducts(){
+        System.out.println("Display list of user products:");
+        Scanner in = new Scanner(System.in);
+        int userProductsId = 0;
+
+        while (!in.hasNextInt() || (userProductsId = in.nextInt()) > 2 || userProductsId < 0){
+            System.out.println("Error, please try again!");
+            in.nextLine();
+        }
+        for (int i = 0; i < multiMapUser.size(); i++) {
+            if (multiMapUser.containsKey(userProductsId)){
+                System.out.println(multiMapUser);
+            }else
+                System.out.println("This user has not purchased anything!");
+        }
+    }
+
+    private static void boughtProduct(){
+        System.out.println("Display list of users that bought product:");
+        Scanner in = new Scanner(System.in);
+        int boughtProductId = 0;
+
+        while (!in.hasNextInt() || (boughtProductId = in.nextInt()) > 2 || boughtProductId < 0){
+            System.out.println("Error, please try again!");
+            in.nextLine();
+        }
+        for (int i = 0; i < multiMapProduct.size(); i++) {
+            if (multiMapProduct.containsKey(boughtProductId)){
+                System.out.println(multiMapProduct);
+            }else
+                System.out.println("No one bought this product!");
+        }
+    }
 }
