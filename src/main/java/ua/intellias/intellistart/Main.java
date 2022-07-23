@@ -1,11 +1,11 @@
 package ua.intellias.intellistart;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.ListIterator;
 import java.util.Scanner;
 public class Main {
     private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Product> products = new ArrayList<>();
+    private static HashMap<Integer, Integer> userProducts = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -14,7 +14,7 @@ public class Main {
         User user2 = new User(2, "David", "Gonzales", 2000);
         User user3 = new User(3, "Bruno", "Lewis", 4000);
 
-        // Add users to Collectin ArrayList
+        // Add users to Collection ArrayList
         users.add(user1);
         users.add(user2);
         users.add(user3);
@@ -24,7 +24,7 @@ public class Main {
         Product product2 = new Product(2, "Veal", 3250);
         Product product3 = new Product(3, "Chicken", 850);
 
-        // Add products to Collectin ArrayList
+        // Add products to Collection ArrayList
         products.add(product1);
         products.add(product2);
         products.add(product3);
@@ -43,21 +43,13 @@ public class Main {
 
         switch (numCase) {
             case 1:
-                System.out.println("\nDisplay list of all users:");
-                for (int i = 0; i < users.size(); i++) {
-                    System.out.println("id = " + users.get(i).getId() + ", first name = " + users.get(i).getFirstName()
-                            + ", last name = " + users.get(i).getLastName() + ", amountOfMoney = " + users.get(i).getAmountOfMoney() + " UAH");
-                }
+                userList();
                 break;
             case 2:
-                System.out.println("\nDisplay list of all products:");
-                for (int i = 0; i < products.size(); i++) {
-                    System.out.println("id = " + products.get(i).getId() + ", name = " + products.get(i).getName()
-                            + ", price = " + products.get(i).getPrice() + " UAH");
-                }
+                productList();
                 break;
             case 3:
-               buyProduct();
+                buyProduct();
                 break;
             case 4:
                 System.out.println("Display list of user products:");
@@ -70,6 +62,22 @@ public class Main {
         }
         in.close();
 }
+
+    private static void userList(){
+        System.out.println("\nDisplay list of all users:");
+        for (int i = 0; i < users.size(); i++) {
+            System.out.println("id = " + users.get(i).getId() + ", first name = " + users.get(i).getFirstName()
+                    + ", last name = " + users.get(i).getLastName() + ", amountOfMoney = " + users.get(i).getAmountOfMoney() + " UAH");
+        }
+    }
+
+    private static void productList(){
+        System.out.println("\nDisplay list of all products:");
+        for (int i = 0; i < products.size(); i++) {
+            System.out.println("id = " + products.get(i).getId() + ", name = " + products.get(i).getName()
+                    + ", price = " + products.get(i).getPrice() + " UAH");
+        }
+    }
 
     private static void buyProduct(){
         System.out.println("The user buys the product:");
@@ -92,21 +100,16 @@ public class Main {
                 if (userId == users.get(i).getId() && productId == products.get(j).getId()){
                     if(users.get(i).getAmountOfMoney() >= products.get(j).getPrice()){
                         System.out.println("Success!!! " + users.get(i).getFirstName() + " " + users.get(i).getLastName() + " bought " + products.get(j).getName());
-
                         //Decrease of user's money
                         users.get(i).setAmountOfMoney(users.get(i).getAmountOfMoney() - products.get(j).getPrice());
-
-                        HashMap<Integer, Integer> userProducts = new HashMap<>();
+                        //Add user products to Collection HashMap
                         userProducts.put(users.get(i).getId(), products.get(j).getId());
-//                    System.out.println(userProducts);
-//                    System.out.println(users.get(i).getAmountOfMoney());
                     }else {
                         System.out.println(users.get(i).getFirstName() + " " + users.get(i).getLastName() + " has no money!");
                     }
                 }
             }
         }
-
     }
 
 }
