@@ -20,9 +20,9 @@ public class Main {
 }
     private static void createUsers(){
         //Create users
-        User user0 = new User(0, "Bob", "Miller", new BigDecimal("260.50"));
-        User user1 = new User(1, "David", "Gonzales", new BigDecimal("350.25"));
-        User user2 = new User(2, "Bruno", "Lewis", new BigDecimal("100.00"));
+        User user0 = new User(0, "Bob", "Miller", new BigDecimal("1260.50"));
+        User user1 = new User(1, "David", "Gonzales", new BigDecimal("2350.25"));
+        User user2 = new User(2, "Bruno", "Lewis", new BigDecimal("3100.00"));
 
         // Add users to Collection ArrayList
         users.add(user0);
@@ -41,6 +41,7 @@ public class Main {
         products.add(product1);
         products.add(product2);
     }
+
     private static void mainMenu(){
         System.out.println("Menu:");
         System.out.println("1: Display list of all users\n" +
@@ -52,14 +53,12 @@ public class Main {
 
         System.out.print("\nEnter menu number: ");
         Scanner in = new Scanner(System.in);
-        int numCase = 0;
-
+        int numCase;
         while (!in.hasNextInt() || (numCase = in.nextInt()) > 5 || numCase < 0) {
             System.out.println("This is not a menu number!");
             System.out.print("Enter menu number: ");
             in.next();
         }
-
 
         switch (numCase) {
             case 1:
@@ -85,6 +84,22 @@ public class Main {
         in.close();
     }
 
+    private static void returnToMenu(){
+
+        System.out.println("\nPress 1 return to menu: ");
+        System.out.println("Press 0 to exit ");
+        Scanner in = new Scanner(System.in);
+        int menuReturn;
+        while (!in.hasNextInt() || ((menuReturn = in.nextInt()) != 0 && menuReturn != 1)) {
+            System.out.println("Oooops, something wrong!");
+            System.out.println("\nPress 1 return to menu: ");
+            System.out.println("Press 0 to exit ");
+            in.next();
+        }
+        if (menuReturn == 1){
+            mainMenu();
+        }
+    }
     private static void userList(){
         System.out.println("\nDisplay list of all users:");
         for (int i = 0; i < users.size(); i++) {
@@ -92,6 +107,7 @@ public class Main {
                     + ", last name = " + users.get(i).getLastName() + ", amountOfMoney = "
                     + users.get(i).getAmountOfMoney() + " UAH");
         }
+        returnToMenu();
     }
 
     private static void productList(){
@@ -100,21 +116,22 @@ public class Main {
             System.out.println("id = " + products.get(i).getId() + ", name = " + products.get(i).getName()
                     + ", price = " + products.get(i).getPrice() + " UAH");
         }
+        returnToMenu();
     }
 
     private static void buyProduct(){
         System.out.println("The user buys the product:");
         Scanner in = new Scanner(System.in);
         System.out.print("\nWho want to buy product? Enter id: ");
-        int userId = 0;
-        while (!in.hasNextInt() || (userId = in.nextInt()) > users.size() - 1 || userId < 0) {
+        int userId;
+        while (!in.hasNextInt() || ((userId = in.nextInt()) > users.size() - 1 || userId < 0)) {
             System.out.println("Error, please try again!");
             System.out.print("Who want to buy product? Enter id: ");
             in.nextLine();
         }
         System.out.print("\nWhich product want to buy? Enter id: ");
-        int productId = 0;
-        while (!in.hasNextInt() || (productId = in.nextInt()) > products.size() - 1 || productId < 0) {
+        int productId;
+        while (!in.hasNextInt() || ((productId = in.nextInt()) > products.size() - 1 || productId < 0)) {
             System.out.println("Error, please try again!");
             System.out.print("Which product want to buy? Enter id: ");
             in.nextLine();
@@ -145,6 +162,7 @@ public class Main {
                 }
             }
         }
+        returnToMenu();
     }
 
     private static void userProducts(){
@@ -152,7 +170,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         int userProductsId;
 
-        while (!in.hasNextInt() || (userProductsId = in.nextInt()) > multiMapUser.size() || userProductsId < 0){
+        while (!in.hasNextInt() || (userProductsId = in.nextInt()) > multiMapUser.size() - 1 || userProductsId < 0){
             System.out.println("Error, please try again!");
             in.nextLine();
         }
@@ -162,6 +180,7 @@ public class Main {
             }else
                 System.out.println("This user has not purchased anything!");
         }
+        returnToMenu();
     }
 
     private static void boughtProduct(){
@@ -169,7 +188,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         int boughtProductId;
 
-        while (!in.hasNextInt() || (boughtProductId = in.nextInt()) > multiMapProduct.size() || boughtProductId < 0){
+        while (!in.hasNextInt() || (boughtProductId = in.nextInt()) > multiMapProduct.size() - 1 || boughtProductId < 0){
             System.out.println("Error, please try again!");
             in.nextLine();
         }
@@ -179,5 +198,6 @@ public class Main {
             }else
                 System.out.println("No one bought this product!");
         }
+        returnToMenu();
     }
 }
