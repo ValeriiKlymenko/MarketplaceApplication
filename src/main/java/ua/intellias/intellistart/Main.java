@@ -101,7 +101,7 @@ public class Main {
         }
     }
     private static void userList(){
-        System.out.println("\nDisplay list of all users:");
+        System.out.println("\nDisplay list of all users!");
         for (int i = 0; i < users.size(); i++) {
             System.out.println("id = " + users.get(i).getId() + ", first name = " + users.get(i).getFirstName()
                     + ", last name = " + users.get(i).getLastName() + ", amountOfMoney = "
@@ -111,7 +111,7 @@ public class Main {
     }
 
     private static void productList(){
-        System.out.println("\nDisplay list of all products:");
+        System.out.println("\nDisplay list of all products!");
         for (int i = 0; i < products.size(); i++) {
             System.out.println("id = " + products.get(i).getId() + ", name = " + products.get(i).getName()
                     + ", price = " + products.get(i).getPrice() + " UAH");
@@ -120,20 +120,18 @@ public class Main {
     }
 
     private static void buyProduct(){
-        System.out.println("The user buys the product:");
+        System.out.println("The user buys the product!");
         Scanner in = new Scanner(System.in);
         System.out.print("\nWho want to buy product? Enter id: ");
         int userId;
         while (!in.hasNextInt() || ((userId = in.nextInt()) > users.size() - 1 || userId < 0)) {
-            System.out.println("Error, please try again!");
-            System.out.print("Who want to buy product? Enter id: ");
+            System.out.print("Error!!! Enter user id: ");
             in.nextLine();
         }
         System.out.print("\nWhich product want to buy? Enter id: ");
         int productId;
         while (!in.hasNextInt() || ((productId = in.nextInt()) > products.size() - 1 || productId < 0)) {
-            System.out.println("Error, please try again!");
-            System.out.print("Which product want to buy? Enter id: ");
+            System.out.print("Error!!! Enter product id: ");
             in.nextLine();
         }
         for (int i = 0; i < users.size(); i++) {
@@ -166,38 +164,38 @@ public class Main {
     }
 
     private static void userProducts(){
-        System.out.println("Display list of user products:");
+        System.out.println("Display list of user products!");
         Scanner in = new Scanner(System.in);
         int userProductsId;
 
-        while (!in.hasNextInt() || (userProductsId = in.nextInt()) > multiMapUser.size() - 1 || userProductsId < 0){
-            System.out.println("Error, please try again!");
+        while (!in.hasNextInt() || (userProductsId = in.nextInt()) > users.size() - 1 || userProductsId < 0){
+            System.out.print("Error!!! Enter user id: ");
             in.nextLine();
         }
-        for (int i = 0; i < multiMapUser.size(); i++) {
-            if (multiMapUser.containsKey(userProductsId)){
+
+        if (multiMapUser.containsKey(userProductsId)){
                 System.out.println(multiMapUser);
-            }else
-                System.out.println("This user has not purchased anything!");
+            }else {
+            System.out.println("This user has not purchased anything!");
         }
         returnToMenu();
     }
 
     private static void boughtProduct(){
-        System.out.println("Display list of users that bought product:");
+        System.out.println("Display list of users that bought product!");
         Scanner in = new Scanner(System.in);
         int boughtProductId;
 
-        while (!in.hasNextInt() || (boughtProductId = in.nextInt()) > multiMapProduct.size() - 1 || boughtProductId < 0){
-            System.out.println("Error, please try again!");
+        while (!in.hasNextInt() || (boughtProductId = in.nextInt()) > products.size() - 1 || boughtProductId < 0){
+            System.out.print("Error!!! Enter product id: ");
             in.nextLine();
         }
-        for (int i = 0; i < multiMapProduct.size(); i++) {
-            if (multiMapProduct.containsKey(boughtProductId)){
-                System.out.println(multiMapProduct);
-            }else
-                System.out.println("No one bought this product!");
-        }
+
+        if (multiMapProduct.containsKey(boughtProductId)){
+            System.out.println(multiMapProduct);
+        }else{
+            System.out.println("No one bought this product!");
+    }
         returnToMenu();
     }
 }
