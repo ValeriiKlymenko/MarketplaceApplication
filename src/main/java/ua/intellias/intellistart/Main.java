@@ -47,11 +47,19 @@ public class Main {
                 "2: Display list of all products\n" +
                 "3: The user buys the product\n" +
                 "4: Display list of user products\n" +
-                "5: Display list of users that bought product");
+                "5: Display list of users that bought product\n" +
+                "Press 0 to exit");
 
         System.out.print("\nEnter menu number: ");
         Scanner in = new Scanner(System.in);
-        int numCase = in.nextInt();
+        int numCase = 0;
+
+        while (!in.hasNextInt() || (numCase = in.nextInt()) > 5 || numCase < 0) {
+            System.out.println("This is not a menu number!");
+            System.out.print("Enter menu number: ");
+            in.next();
+        }
+
 
         switch (numCase) {
             case 1:
@@ -68,6 +76,8 @@ public class Main {
                 break;
             case 5:
                 boughtProduct();
+                break;
+            case 0:
                 break;
             default:
                 System.out.println("Oooops, something wrong!");
@@ -97,21 +107,23 @@ public class Main {
         Scanner in = new Scanner(System.in);
         System.out.print("\nWho want to buy product? Enter id: ");
         int userId = 0;
-        while (!in.hasNextInt() || (userId = in.nextInt()) > users.size() || userId < 0) {
+        while (!in.hasNextInt() || (userId = in.nextInt()) > users.size() - 1 || userId < 0) {
             System.out.println("Error, please try again!");
+            System.out.print("Who want to buy product? Enter id: ");
             in.nextLine();
         }
         System.out.print("\nWhich product want to buy? Enter id: ");
         int productId = 0;
-        while (!in.hasNextInt() || (productId = in.nextInt()) > products.size() || productId < 0) {
+        while (!in.hasNextInt() || (productId = in.nextInt()) > products.size() - 1 || productId < 0) {
             System.out.println("Error, please try again!");
+            System.out.print("Which product want to buy? Enter id: ");
             in.nextLine();
         }
         for (int i = 0; i < users.size(); i++) {
             for (int j = 0; j < products.size(); j++) {
                 if (userId == users.get(i).getId() && productId == products.get(j).getId()){
                     if(users.get(i).getAmountOfMoney().compareTo(products.get(j).getPrice()) == 1){
-                        System.out.println("Success!!! " + users.get(i).getFirstName() + " "
+                        System.out.println("\nSuccess!!! " + users.get(i).getFirstName() + " "
                                 + users.get(i).getLastName() + " bought " + products.get(j).getName());
                         //Decrease of user's money
                         users.get(i).setAmountOfMoney(users.get(i).getAmountOfMoney().subtract(products.get(j).getPrice()));
@@ -127,7 +139,7 @@ public class Main {
                         multiMapBoughtProduct.add(users.get(i).getId());
                         multiMapProduct.put(products.get(j).getId(), multiMapBoughtProduct);
                     }else {
-                        System.out.println(users.get(i).getFirstName() + " " + users.get(i).getLastName()
+                        System.out.println("\n" + users.get(i).getFirstName() + " " + users.get(i).getLastName()
                                 + " has no money to buy " + products.get(j).getName());
                     }
                 }
